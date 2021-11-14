@@ -15,7 +15,7 @@ class Category(models.Model):
 
 
 class Torrent(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True, db_index=True, blank=True)
     uploaded_by = models.CharField(max_length=25)
     torrent_path = models.FileField(upload_to='torrents/')
     uploaded_at = models.DateTimeField(auto_now=False, auto_now_add=True)
