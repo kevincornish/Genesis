@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container jumbotron mt-4" style="max-width:550px">
+    <div class="container">
+        <form action="/upload/" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" required id="id_torrent_path" name="torrent_path">
+                <label id="idLCustomFile" class="custom-file-label" for="customFile" name="labelInputFile">Select a
+                    torrent file to upload</label>
+                <label id="id_name" for="name" name="label_name">Torrent name:</label>
+                <input type="name" required id="id_name" name="name">
+            </div>
+            <div class=" d-flex justify-content-end mb-1 my-1">
+                <button class="btn btn-primary" type="submit">Upload</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
