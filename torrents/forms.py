@@ -4,4 +4,4 @@ from .models import Torrent
 class TorrentForm(forms.ModelForm):
     class Meta:
         model = Torrent
-        fields = ('torrent_path','name')
+        fields = ('torrent_path','name','category')

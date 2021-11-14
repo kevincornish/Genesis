@@ -4,14 +4,20 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from torrents.forms import TorrentForm
-from torrents.models import Torrent
+from torrents.models import Torrent, Category
 from django.contrib.auth import views
 from django.contrib.auth.decorators import login_required
 
 @login_required(login_url="/login/")
 def browse(request):
-    torrents = Torrent.objects.all()
-    return render(request, 'torrents/browse.html',{'torrents':torrents})
+    if 'category' in request.GET:
+          category = request.GET.get('category', None)
+          if category: 
+                torrents = Torrent.objects.filter(category=category)
+    else:
+        torrents = Torrent.objects.all().order_by("-uploaded_at")
+    categories = Category.objects.all()
+    return render(request, 'torrents/browse.html',{'torrents':torrents,'categories':categories})
 
 @login_required(login_url="/login/")
 def upload(request):
@@ -23,10 +29,12 @@ def upload(request):
             torrentForm.torrent_path = request.FILES['torrent_path']
             torrentForm.uploaded_by = request.user.username
             torrentForm.name = request.POST['name']
+            torrentForm.category = Category.objects.get(id = request.POST['category'])
             torrentForm.save()
             return redirect('browse')
         else:
             return HttpResponse("form is not valid")
     else:
         fileUploadForm = TorrentForm()
-    return render(request, 'torrents/upload.html', {'form': fileUploadForm})
+        categories = Category.objects.all()
+    return render(request, 'torrents/upload.html', {'form': fileUploadForm,'categories':categories})

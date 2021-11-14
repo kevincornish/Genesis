@@ -2,7 +2,6 @@
 
 {% block title %}Profile{% endblock %}
 {% block content %}
-
 <div class="container jumbotron mt-4" style="max-width:500px">
         {% if torrents %}
         {% for torrent in torrents %}
@@ -10,6 +9,7 @@
                 <li>Name: {{ torrent.name }}</li>
                 <li>Uploaded by: {{ torrent.uploaded_by }}</li>
                 <li>Upload Date: {{ torrent.uploaded_at }}</li>
+                <li>Category: {{ torrent.category }}</li>
                 <a href="/media/{{torrent.torrent_path}}">Download</a>
         </ul>
         {% endfor %}
