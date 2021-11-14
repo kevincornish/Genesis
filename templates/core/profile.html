@@ -3,6 +3,10 @@
 {% block title %}Profile{% endblock %}
 {% block content %}
 <div class="container jumbotron mt-4" style="max-width:500px">
+<p>{{userprofile.username}}</p>
+<p>{{userprofile.user.date_of_birth}}</p>
+</div>
+<div class="container jumbotron mt-4" style="max-width:500px">
         {% if torrents %}
         {% for torrent in torrents %}
         <ul>
