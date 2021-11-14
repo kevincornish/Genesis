@@ -47,5 +47,5 @@ def doSignup(request):
 
 @login_required(login_url="/login/")
 def profile(request):
-    torrents = Torrent.objects.filter(uploaded_by__icontains=request.user.username)
+    torrents = Torrent.objects.filter(uploaded_by__icontains=request.user.username).order_by("-uploaded_at")
     return render(request, 'core/profile.html',{'torrents':torrents} )
