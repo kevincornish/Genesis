@@ -7,10 +7,11 @@ from torrents.forms import TorrentForm
 from torrents.models import Torrent, Category
 from django.contrib.auth import views
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import permission_required
 
 import bencoder
 
-@login_required(login_url="/login/")
+@login_required()
 def browse(request):
     if 'category' in request.GET:
           category = request.GET.get('category', None)
@@ -21,8 +22,10 @@ def browse(request):
     categories = Category.objects.all()
     return render(request, 'torrents/browse.html',{'torrents':torrents,'categories':categories})
 
-@login_required(login_url="/login/")
+@login_required()
+@permission_required('torrent.add_torrent')
 def upload(request):
+    
     categories = Category.objects.all()
     if request.method == 'POST':
         fileUploadForm = TorrentForm(request.POST, request.FILES)
