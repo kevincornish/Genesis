@@ -7,7 +7,7 @@ from torrents.models import Torrent
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 
-@login_required(login_url="/login/")
+@login_required()
 def home(request):
     return render(request, "core/index.html",{})
 
@@ -45,7 +45,7 @@ def doSignup(request):
         form = UserCreationForm()
     return render(request, 'core/signup.html', {'form': form})
 
-@login_required(login_url="/login/")
+@login_required()
 def profile(request):
     userprofile = request.user
     torrents = Torrent.objects.filter(uploaded_by__icontains=request.user.username).order_by("-uploaded_at")
